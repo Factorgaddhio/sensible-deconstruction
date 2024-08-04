@@ -7,7 +7,7 @@ Second deconstruct Roboports and Electric poles beginning from the edges.
 
 This allows all selected buildings to be deconstructed by construction bots.
 
-Use Shift-Ctrl-D to enable the newly introduced sensible deconstruction planner.
+Use Ctrl-Shift-D to enable the newly introduced sensible deconstruction planner.
 
 ALPHA-version - Additional testing and feedback appreciated.
 

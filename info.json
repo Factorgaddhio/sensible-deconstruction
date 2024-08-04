@@ -1,10 +1,10 @@
 {
     "name": "sensible-deconstruction",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "title": "Sensible Deconstruction",
     "author": "Gaddhi",
     "homepage": "https://github.com/Factorgaddhio/sensible-deconstruction",
     "factorio_version": "1.1",
     "dependencies": ["base >= 1.1"],
-    "description": "Deconstruct buildings in a sensible way.\n\nFirst deconstruct all buildings except Roboports and Electric poles.\nSecond deconstruct Roboports and Electric poles beginning from the edges.\n\nThis allows all selected buildings to be deconstructed by construction bots.\n\nUse Shift-Ctrl-D to enable the newly introduced sensible deconstruction planner.\n\nALPHA-version - Additional testing and feedback appreciated."
+    "description": "Deconstruct buildings in a sensible way.\nThis allows all selected buildings to be deconstructed by construction bots.\nUse Ctrl-Shift-D to enable the newly introduced sensible deconstruction planner.\n\nALPHA-version - Additional testing and feedback appreciated."
 }

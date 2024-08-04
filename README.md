@@ -2,10 +2,17 @@ Sensible Deconstruction
 
 A Factorio Mod that deconstructs buildings in a sensible way.
 
-First deconstruct all buildings except Roboports and Electric poles.
-Second deconstruct Roboports and Electric poles beginning from the edges.
+The following five steps are executed while there are still buildings to be deconstructed:
+1. Deconstruct all buildings except Roboports and Electric poles.
+2. Deconstruct Roboports and Electric poles beginning from the edgesof the power supply area.
+3. Remove cycles within all energy pole connections.
+4. Again deconstruct Roboports and Electric poles beginning from the edges of the power supply area
+5. Deconstruct additional Roboports, that are not at the edges of the power supply area
 
-This allows all selected buildings to be deconstructed by construction bots.
+If there are still buildings left after the last step, the sensible deconstruction planner gives up,
+since it encountered an unhandleable situation.
+
+This method allows all (within reason) selected buildings to be deconstructed by construction bots.
 
 Use Ctrl-Shift-D to enable the newly introduced sensible deconstruction planner.
 

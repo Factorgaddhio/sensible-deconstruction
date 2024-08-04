@@ -102,7 +102,7 @@ function on_tick()
                     end
                 elseif work.stage == 30 then
                     -- Stage 30: Remove iteratively Powerpoles and Roboports at the End of the areas
-                    deconstruct_essentials(work)
+                    deconstruct_essentials(work, false)
                 elseif work.stage == 40 then
                     -- Stage 40: Break electric pole loops
                     local entities = game.surfaces[work.surface_index].find_entities_filtered{area = work.area, force = work.force_index, type = {'electric-pole'}}
@@ -122,14 +122,21 @@ function on_tick()
                         work.stage_40_power_pole_index = work.stage_40_power_pole_index + 1
                     else
                         if work.stage_40_connection_removed then
-                            work.stage = 30
+                            work.stage = 50
                         else
+                            work.stage = 60
                             -- mylog("No more power pole connections removable")
                             -- mylog("End Process")
-                            mylog("Sensible Deconstruction canceled with " .. work.stage_3_remaining_entities .. " entities remaining")
-                            work.to_be_deleted = true
                         end
                     end
+                elseif work.stage == 50 then
+                    -- Stage 50: Remove iteratively Powerpoles and Roboports at the End of the areas
+                    -- after getting rid of electric pole loops
+                    deconstruct_essentials(work, false)
+                elseif work.stage == 60 then
+                    -- Stage 60: Remove iteratively Powerpoles and Roboports at the End of the areas
+                    -- also force removal of roboports, that are not at the edges
+                    deconstruct_essentials(work, true)
                 end
             end
         end
@@ -264,13 +271,13 @@ end
 
 -- STAGE 30 ===================================
 
-function deconstruct_essentials(work)
+function deconstruct_essentials(work, force_removal)
     local loop_checker = {
         x = work.current.x,
         y = work.current.y
     }
     for i = 1, chunks_per_tick do
-        check_chunk_30(work)
+        check_chunk_30(work, force_removal)
         if work.current.x == work.right_botton.x then
             work.current.x = work.left_top.x
             if work.current.y == work.right_botton.y then
@@ -288,7 +295,7 @@ function deconstruct_essentials(work)
     end
 end
 
-function check_chunk_30(work)
+function check_chunk_30(work, force_removal)
     local chunk_position = work.current
     if not game.forces[work.force_index].is_chunk_charted(work.surface_index, chunk_position) then return end
     local bounded_area = {
@@ -307,7 +314,7 @@ function check_chunk_30(work)
     for i, entity in pairs(entities) do
         if not entity.to_be_deconstructed() then
             if entity.type == 'roboport' then
-                if not try_removing_roboport(entity, work) then
+                if not try_removing_roboport(entity, work, force_removal) then
                     work.stage_3_remaining_entities = work.stage_3_remaining_entities + 1
                 end
             elseif entity.type == 'electric-pole' then
@@ -331,16 +338,20 @@ function check_chunk_30(work)
     end
 end
 
-function try_removing_roboport(entity, work)
+function try_removing_roboport(entity, work, force_removal)
 
-    -- Try to remove roboports at the ends of power pole lines
-    -- this is to bring roboport removal in accordance with power pole removal
-    local poles = get_powerpoles_of_roboport(entity, work)
-    for i, p in pairs(poles) do
-        if table_size(p.neighbours.copper) > 1 then
-            -- Assume that there is a different Roboport, that can be removed prefiously while keeping
-            -- in sync with power poles
-            return false
+    if not force_removal then
+        -- Try to remove roboports at the ends of power pole lines
+        -- this is to bring roboport removal in accordance with power pole removal
+
+        -- is disabled with the function argument force_removal
+        local poles = get_powerpoles_of_roboport(entity, work)
+        for i, p in pairs(poles) do
+            if table_size(p.neighbours.copper) > 1 then
+                -- Assume that there is a different Roboport, that can be removed prefiously while keeping
+                -- in sync with power poles
+                return false
+            end
         end
     end
 
@@ -477,8 +488,17 @@ function after_stage_30_loop_done(work)
     end
     if work.stage_3_remaining_entities > 0 and work.stage_3_entities_to_be_decinstructed == 0 then
         -- Nothing has changed in current loop and there are still entities to be removed
-        work.stage = 40
-        -- mylog("STAGE 40 ==================")
+        if work.stage == 30 then
+            work.stage = 40
+            -- mylog("STAGE 40 ==================")
+        elseif work.stage == 50 then
+            work.stage = 60
+        elseif work.stage == 50 then
+            work.stage = 60
+        elseif work.stage == 60 then
+            mylog("Sensible Deconstruction canceled with " .. work.stage_3_remaining_entities .. " entities remaining")
+            work.to_be_deleted = true
+        end
         return
     end
     -- There is still work to be done

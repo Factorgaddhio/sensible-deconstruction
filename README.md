@@ -13,7 +13,6 @@ ALPHA-version - Additional testing and feedback appreciated.
 
 Missing features:
 - Solve performance issues with lots of Roboports
-- Force-deconstruct Roboports mode
 - Quality of life additions
 - Visual feedback
 

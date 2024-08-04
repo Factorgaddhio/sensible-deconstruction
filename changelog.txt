@@ -8,3 +8,5 @@ Version: 0.1.1
 Date: 04. 08. 2024
   Bugfixes:
     - Don't act on other events
+  Features:
+    - Remove Roboports in certain conditions

@@ -12,7 +12,6 @@ Use Shift-Ctrl-D to enable the newly introduced sensible deconstruction planner.
 ALPHA-version - Additional testing and feedback appreciated.
 
 Missing features:
-- Solve performance issues with lots of Roboports
 - Quality of life additions
 - Visual feedback
 

@@ -434,6 +434,7 @@ function try_removing_roboport(entity, work, force_removal)
                     end
                 end
             end
+            if need_to_find == 0 then break end
             index = index + 1
         end
         -- mylog("delta" .. need_to_find)

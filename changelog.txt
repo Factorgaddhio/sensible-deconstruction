@@ -3,3 +3,8 @@ Version: 0.1.0
 Date: 04. 08. 2024
   Major Feature:
     - Initial release
+---------------------------------------------------------------------------------------------------
+Version: 0.1.1
+Date: 04. 08. 2024
+  Bugfixes:
+    - Don't act on other events

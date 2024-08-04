@@ -11,11 +11,11 @@ script.on_init(function()
 end)
 
 function on_player_selected_area(event)
+    if not (event.item == 'gaddhi:sd-mark-region') then return end
     if table_size(global.gaddhi_sd_data.works) > 0 then
         game.print("Disallow multiple concurrent sensible deconstructions.")
         return
     end
-    if not (event.item == 'gaddhi:sd-mark-region') then return end
     local area = event.area
     local player = game.players[event.player_index]
     local surface = player.surface.name

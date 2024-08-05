@@ -411,7 +411,7 @@ function try_removing_roboport(entity, work, force_removal)
         end
         local found = {}
         local foundi = {}
-        found[start_roboport.position.x .. "/" .. start_roboport.position.y] = true
+        found[start_roboport.unit_number] = true
         local indexf = 1
         foundi[indexf] = start_roboport
         indexf = indexf + 1
@@ -420,15 +420,14 @@ function try_removing_roboport(entity, work, force_removal)
         while index <= table_size(foundi) do
             -- mylog("index:" .. index)
             local others = get_logistic_connected_roboports(foundi[index], work.surface_index, work.force_index)
-            for i, o in pairs(others) do
-                local hash = o.position.x .. "/" .. o.position.y
-                if o ~= entity and found[hash] == nil and not o.to_be_deconstructed() then
+            for _, o in pairs(others) do
+                if o ~= entity and found[o.unit_number] == nil and not o.to_be_deconstructed() then
                     -- mylog({"adding", o.gps_tag})
-                    found[hash] = true
+                    found[o.unit_number] = true
                     foundi[indexf] = o
                     indexf = indexf + 1
-                    if todo_roboports[hash] ~= nil then
-                        todo_roboports[hash] = nil
+                    if todo_roboports[o.unit_number] ~= nil then
+                        todo_roboports[o.unit_number] = nil
                         need_to_find = need_to_find - 1
                         -- mylog("found "..o.gps_tag)
                     end
@@ -528,7 +527,7 @@ function is_connected_indirectly(a, b, work)
     local findex = 1
     for i, other in pairs(a.neighbours.copper) do
         if not (other == b) and other.surface_index == work.surface_index then
-            found[other.position.x .. "/" .. other.position.y] = true
+            found[other.unit_number] = true
             foundi[findex] = other
             findex = findex + 1
         end
@@ -543,10 +542,9 @@ function is_connected_indirectly(a, b, work)
                 return true
             end
             if o ~= a then
-                local hash = o.position.x .. "/" .. o.position.y
-                if found[hash] == nil then
+                if found[o.unit_number] == nil then
                     -- mylog({"adding", o.gps_tag})
-                    found[hash] = true
+                    found[o.unit_number] = true
                     foundi[findex] = o
                     findex = findex + 1
                 end

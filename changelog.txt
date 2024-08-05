@@ -1,9 +1,4 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.1.0
-Date: 04. 08. 2024
-  Major Feature:
-    - Initial release
----------------------------------------------------------------------------------------------------
 Version: 0.1.1
 Date: 04. 08. 2024
   Bugfixes:
@@ -13,3 +8,8 @@ Date: 04. 08. 2024
     - Handle a big number of Roboports with less lagspikes
   Features:
     - Remove Roboports in certain conditions
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 04. 08. 2024
+  Major Feature:
+    - Initial release

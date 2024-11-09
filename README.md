@@ -25,3 +25,6 @@ Missing features:
 License: MIT
 
 Graphics attribution: The icon uses the deconstruction planner graphic of the Factorio base game
+
+Factorio 1.1 is compatible up to V0.1.1.
+Factorio 2.0 is compatible to V0.2.0 and later.

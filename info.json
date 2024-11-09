@@ -1,10 +1,10 @@
 {
     "name": "sensible-deconstruction",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "title": "Sensible Deconstruction",
     "author": "Gaddhi",
     "homepage": "https://github.com/Factorgaddhio/sensible-deconstruction",
-    "factorio_version": "1.1",
-    "dependencies": ["base >= 1.1"],
+    "factorio_version": "2.0",
+    "dependencies": ["base >= 2.0"],
     "description": "Deconstruct buildings in a sensible way.\nThis allows all selected buildings to be deconstructed by construction bots.\nUse Ctrl-Shift-D to enable the newly introduced sensible deconstruction planner.\n\nALPHA-version - Additional testing and feedback appreciated."
 }
